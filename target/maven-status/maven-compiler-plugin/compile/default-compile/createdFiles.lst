@@ -1,0 +1,12 @@
+me\liberi\sms\HelloServlet.class
+me\liberi\sms\HelloResource.class
+me\liberi\sms\controllers\StudentController.class
+me\liberi\sms\views\NewStudent.class
+me\liberi\sms\dao\StudentDAO.class
+me\liberi\sms\services\StudentService.class
+me\liberi\sms\views\EditStudent.class
+me\liberi\sms\views\AllStudents.class
+me\liberi\sms\models\Student.class
+me\liberi\sms\HelloApplication.class
+me\liberi\sms\config\DbConnection.class
+me\liberi\sms\views\ViewStudent.class
