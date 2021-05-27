@@ -1,12 +1,25 @@
 package me.liberi.sms.models;
 
+import javax.persistence.*;
+
+@Entity()
 public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",length=64)
     private int id;
+    @Column(name="firstName",nullable = true, unique = true)
     private String firstName;
+    @Column(name = "lastName")
     private String lastName;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "email")
     private String email;
+    @Column(name = "year")
     private String year;
+    @Column(name = "className")
     private String  className;
 
     public Student(){}

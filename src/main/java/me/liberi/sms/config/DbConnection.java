@@ -7,10 +7,10 @@ import java.sql.SQLException;
 public class DbConnection {
     public static Connection getConnection() throws SQLException {
         Connection connection;
-        String dbUrl = "jdbc:mysql://127.0.0.1/servelet";
+        String dbUrl = "jdbc:mysql://127.0.0.1/servelet?useSSL=false";
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

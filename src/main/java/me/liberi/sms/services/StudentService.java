@@ -1,6 +1,8 @@
 package me.liberi.sms.services;
 
 import me.liberi.sms.controllers.StudentController;
+import me.liberi.sms.dao.StudentHibernateDao;
+import me.liberi.sms.models.Student;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 @WebServlet(name = "Students", value = "/students")
 public class StudentService extends HttpServlet {
     private final StudentController controller = new StudentController();
+    private final StudentHibernateDao studentDao = new StudentHibernateDao();
 
     public StudentService() throws SQLException {
     }
@@ -66,13 +69,13 @@ public class StudentService extends HttpServlet {
         StudentController controller;
         try {
             controller = new StudentController();
-            int result = controller.create(firstName, lastName, gender, email, year, className);
-
-            if (result == 1) {
+                studentDao.saveStudent(new Student(firstName,lastName,gender,email,year,className));
+//            int result = controller.create(firstName, lastName, gender, email, year, className);
+//            if (result == 1) {
                 response.sendRedirect("all-students");
-            } else {
-                response.getOutputStream().println("<h1>Failed to create the Student </h1>");
-            }
+//            } else {
+//                response.getOutputStream().println("<h1>Failed to create the Student </h1>");
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
