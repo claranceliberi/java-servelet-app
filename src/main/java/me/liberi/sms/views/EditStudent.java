@@ -1,6 +1,8 @@
 package me.liberi.sms.views;
 
 import me.liberi.sms.controllers.StudentController;
+import me.liberi.sms.dao.StudentHibernateDao;
+import me.liberi.sms.models.Student;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,15 +46,22 @@ public class EditStudent extends HttpServlet {
 
         StudentController controller;
         try {
-            controller = new StudentController();
-            int result = controller.update(id, firstName, lastName, gender, email, year, className);
+//            controller = new StudentController();
+//            int result = controller.update(id, firstName, lastName, gender, email, year, className);
+//
+//            if (result == 1) {
+//                response.sendRedirect("all-students");
+//            } else {
+//                response.getOutputStream().println("<h1>Failed to update the Student </h1>");
+//            }
 
-            if (result == 1) {
-                response.sendRedirect("all-students");
-            } else {
-                response.getOutputStream().println("<h1>Failed to update the Student </h1>");
-            }
-        } catch (SQLException e) {
+
+             new StudentHibernateDao().updateStudent(new Student(id, firstName, lastName, gender, email, year, className));
+            response.sendRedirect("all-students");
+
+
+        } catch (Exception e) {
+            response.getOutputStream().println("<h1>Failed to update the Student </h1>");
             e.printStackTrace();
         }
     }

@@ -1,38 +1,40 @@
 package me.liberi.sms.controllers;
 
 import me.liberi.sms.dao.StudentDAO;
+import me.liberi.sms.dao.StudentHibernateDao;
 import me.liberi.sms.models.Student;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class StudentController {
-    private final StudentDAO dao;
+    private final StudentHibernateDao dao;
 
     public StudentController() throws SQLException {
-        dao = new StudentDAO();
+        dao = new StudentHibernateDao();
     }
 
     public List<Student> getStudents() throws SQLException {
-        return dao.getAll();
+        System.out.println("fetching students");
+        return dao.getAllStudent();
     }
 
     public Student getById(int id) throws SQLException {
-        return dao.show(id);
+        return dao.getStudent(id);
     }
 
-    public int create(String firstName, String lastName, String gender, String email, String year, String className) throws SQLException {
-        return dao.create(new Student(firstName, lastName, gender, email , year, className));
+    public void create(String firstName, String lastName, String gender, String email, String year, String className) throws SQLException {
+         dao.saveStudent(new Student(firstName, lastName, gender, email , year, className));
     }
 
-    public int update(int id, String firstName, String lastName, String gender, String email, String year, String className) throws SQLException {
+    public void update(int id, String firstName, String lastName, String gender, String email, String year, String className) throws SQLException {
         Student student = new Student(firstName, lastName, gender, email, year, className);
         student.setId(id);
-        return dao.update(student);
+        dao.updateStudent(student);
     }
 
-    public boolean delete(int id) throws SQLException {
+    public void delete(int id) throws SQLException {
         Student student = new Student(id);
-        return dao.delete(student);
+        dao.deleteStudent(id);
     }
 }

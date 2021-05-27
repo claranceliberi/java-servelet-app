@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "Students", value = "/students")
 public class StudentService extends HttpServlet {
-    private final StudentController controller = new StudentController();
+//    private final StudentController controller = new StudentController();
     private final StudentHibernateDao studentDao = new StudentHibernateDao();
 
     public StudentService() throws SQLException {
@@ -28,19 +28,28 @@ public class StudentService extends HttpServlet {
 
         switch (action) {
             case "DELETE":
-                boolean result = false;
+//                boolean result = false;
+//                try {
+//                    result = controller.delete(studentId);
+//                } catch (SQLException throwable) {
+//                    throwable.printStackTrace();
+//                }
+//                if(result) response.sendRedirect("all-students");
+//                else response.getOutputStream().println("<h1>Failed to delete a student</h1>");
+
                 try {
-                    result = controller.delete(studentId);
-                } catch (SQLException throwable) {
+                    studentDao.deleteStudent(studentId);
+                    response.sendRedirect("all-students");
+                } catch (Exception throwable) {
+                    response.getOutputStream().println("<h1>Failed to delete a student</h1>");
                     throwable.printStackTrace();
                 }
-                if(result) response.sendRedirect("all-students");
-                else response.getOutputStream().println("<h1>Failed to delete a student</h1>");
+
                 break;
             case "REDIRECT_TO_UPDATE":
                 try {
-                    request.setAttribute("student", controller.getById(studentId));
-                } catch (SQLException throwable) {
+                    request.setAttribute("student", studentDao.getStudent(studentId));
+                } catch (Exception throwable) {
                     throwable.printStackTrace();
                 }
 
@@ -68,15 +77,16 @@ public class StudentService extends HttpServlet {
 
         StudentController controller;
         try {
-            controller = new StudentController();
-                studentDao.saveStudent(new Student(firstName,lastName,gender,email,year,className));
+//            controller = new StudentController();
 //            int result = controller.create(firstName, lastName, gender, email, year, className);
 //            if (result == 1) {
-                response.sendRedirect("all-students");
 //            } else {
 //                response.getOutputStream().println("<h1>Failed to create the Student </h1>");
 //            }
-        } catch (SQLException e) {
+            studentDao.saveStudent(new Student(firstName,lastName,gender,email,year,className));
+            response.sendRedirect("all-students");
+        } catch (Exception e) {
+            response.getOutputStream().println("<h1>Failed to create the Student </h1>");
             e.printStackTrace();
         }
     }
